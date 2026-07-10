@@ -14,6 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/api/v1/patients")
+@RequiredArgsConstructor
 public class PatientController {
+
+    private final PatientService patientService;
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<PatientResponseDto>> createPatient(
+            @Valid @RequestBody PatientRequestDto requestDto) {
+        PatientResponseDto created = patientService.createPatient(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Patient created successfully", created));
+    }
 
 }
