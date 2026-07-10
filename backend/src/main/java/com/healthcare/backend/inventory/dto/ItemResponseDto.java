@@ -11,7 +11,28 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemResponseDto {
 
+    private UUID id;
+    private String itemCode;
+    private String itemName;
+    private ItemCategory category;
+    private String unit;
+    private Integer quantityInStock;
+    private Integer reorderLevel;
+    private BigDecimal purchasePrice;
+    private BigDecimal sellingPrice;
+    private String storageLocation;
+    private boolean belowReorderLevel;
 
+    private UUID supplierId;
+    private String supplierName;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
