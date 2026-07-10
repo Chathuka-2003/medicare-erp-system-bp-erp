@@ -29,4 +29,17 @@ public class PatientController {
                 .body(ApiResponse.success("Patient created successfully", created));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PatientResponseDto>> getPatientById(@PathVariable UUID id) {
+        PatientResponseDto patient = patientService.getPatientById(id);
+        return ResponseEntity.ok(ApiResponse.success("Patient retrieved successfully", patient));
+    }
+
+    @GetMapping("/number/{patientNumber}")
+    public ResponseEntity<ApiResponse<PatientResponseDto>> getPatientByPatientNumber(
+            @PathVariable String patientNumber) {
+        PatientResponseDto patient = patientService.getPatientByPatientNumber(patientNumber);
+        return ResponseEntity.ok(ApiResponse.success("Patient retrieved successfully", patient));
+    }
+
 }
