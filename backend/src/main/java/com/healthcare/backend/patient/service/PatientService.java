@@ -9,5 +9,7 @@ import java.util.UUID;
 
 public interface PatientService {
 
+    PatientResponseDto createPatient(PatientRequestDto requestDto);
+
 
 }
