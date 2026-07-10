@@ -42,4 +42,22 @@ public class PatientController {
         return ResponseEntity.ok(ApiResponse.success("Patient retrieved successfully", patient));
     }
 
+    @GetMapping
+    public ResponseEntity<ApiResponse<PageResponse<PatientResponseDto>>> getAllPatients(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "ASC") String sortDirection) {
+
+        Page<PatientResponseDto> result = patientService.getAllPatients(page, size, sortBy, sortDirection);
+        return ResponseEntity.ok(ApiResponse.success("Patients retrieved successfully", PageResponse.of(result)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PatientResponseDto>> updatePatient(
+            @PathVariable UUID id, @Valid @RequestBody PatientRequestDto requestDto) {
+        PatientResponseDto updated = patientService.updatePatient(id, requestDto);
+        return ResponseEntity.ok(ApiResponse.success("Patient updated successfully", updated));
+    }
+
 }
