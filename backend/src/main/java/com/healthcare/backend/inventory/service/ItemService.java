@@ -9,4 +9,15 @@ import java.util.UUID;
 
 public interface ItemService {
 
+    ItemResponseDto createItem(ItemRequestDto requestDto);
+
+    ItemResponseDto getItemById(UUID id);
+
+    Page<ItemResponseDto> getAllItems(int page, int size, String sortBy, String sortDirection);
+
+    List<ItemResponseDto> getLowStockItems();
+
+    ItemResponseDto updateItem(UUID id, ItemRequestDto requestDto);
+
+    void deleteItem(UUID id);
 }
