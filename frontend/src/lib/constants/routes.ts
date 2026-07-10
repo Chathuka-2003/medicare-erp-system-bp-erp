@@ -1,0 +1,18 @@
+export const ROUTES = {
+  LOGIN: "/login",
+  DASHBOARD: "/dashboard",
+  PATIENTS: "/patients",
+  PATIENT_NEW: "/patients/new",
+  PATIENT_DETAIL: (id: string) => `/patients/${id}`,
+  PATIENT_EDIT: (id: string) => `/patients/${id}/edit`,
+  APPOINTMENTS: "/appointments",
+  STAFF_DOCTORS: "/staff/doctors",
+  STAFF_EMPLOYEES: "/staff/employees",
+  EMR_RECORDS: "/emr/records",
+  BILLING_INVOICES: "/billing/invoices",
+  PHARMACY_MEDICINES: "/pharmacy/medicines",
+  LABORATORY_TESTS: "/laboratory/tests",
+  WARD_WARDS: "/ward/wards",
+  INVENTORY_ITEMS: "/inventory/items",
+  REPORTS: "/reports",
+} as const;
