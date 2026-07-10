@@ -60,4 +60,9 @@ public class PatientController {
         return ResponseEntity.ok(ApiResponse.success("Patient updated successfully", updated));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deletePatient(@PathVariable UUID id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.ok(ApiResponse.success("Patient deleted successfully", null));
+    }
 }
