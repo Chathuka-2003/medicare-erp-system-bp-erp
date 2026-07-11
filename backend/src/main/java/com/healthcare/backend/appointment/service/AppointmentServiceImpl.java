@@ -119,6 +119,18 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
     }
 
+    private Doctor findDoctorOrThrow(UUID id) {
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + id));
+    }
+
+    private Pageable buildPageable(int page, int size, String sortBy, String sortDirection) {
+        Sort.Direction direction = "DESC".equalsIgnoreCase(sortDirection) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        String sortField = (sortBy == null || sortBy.isBlank()) ? "id" : sortBy;
+        return PageRequest.of(page, size, Sort.by(direction, sortField));
+    }
+}
+
 
 
 
