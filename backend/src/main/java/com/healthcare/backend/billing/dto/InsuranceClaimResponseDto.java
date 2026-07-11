@@ -12,6 +12,28 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class InsuranceClaimResponseDto {
 
+ private UUID id;
+    private String claimNumber;
+    private String insuranceProvider;
+    private BigDecimal claimAmount;
+    private BigDecimal approvedAmount;
+    private LocalDate claimDate;
+    private LocalDate settlementDate;
+    private String status;
+
+    private UUID patientId;
+    private String patientName;
+
+    private UUID invoiceId;
+    private String invoiceNumber;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
