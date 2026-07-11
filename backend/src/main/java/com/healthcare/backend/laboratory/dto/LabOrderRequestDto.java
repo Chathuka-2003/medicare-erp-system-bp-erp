@@ -1,5 +1,6 @@
 package com.healthcare.backend.laboratory.dto;
 
+import com.healthcare.backend.laboratory.enums.LabOrderSubjectType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,8 +13,13 @@ import java.util.UUID;
 @Setter
 public class LabOrderRequestDto {
 
-    @NotNull(message = "Patient is required")
+    private LabOrderSubjectType patientType;
+
     private UUID patientId;
+
+    private UUID staffId;
+
+    private String otherName;
 
     @NotNull(message = "Doctor is required")
     private UUID doctorId;
