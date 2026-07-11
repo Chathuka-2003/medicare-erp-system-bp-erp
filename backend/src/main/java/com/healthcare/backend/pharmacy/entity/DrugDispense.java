@@ -38,6 +38,7 @@ public class DrugDispense extends BaseEntity {
     @JoinColumn(name = "dispensed_by")
     private Staff pharmacist;
 
+    
     @OneToMany(mappedBy = "drugDispense", cascade = CascadeType.ALL)
     private List<DrugDispenseItem> items;
 
