@@ -130,7 +130,3 @@ public class AppointmentServiceImpl implements AppointmentService {
         return PageRequest.of(page, size, Sort.by(direction, sortField));
     }
 }
-
-
-
-
