@@ -15,3 +15,17 @@ public class AppointmentRequestDto {
 
     @NotNull(message = "Patient is required")
     private UUID patientId;
+
+    @NotNull(message = "Doctor is required")
+    private UUID doctorId;
+
+    @NotNull(message = "Appointment date is required")
+    @Future(message = "Appointment date must be in the future")
+    private LocalDateTime appointmentDate;
+
+    private String reason;
+
+    private String notes;
+
+    private AppointmentStatus status;
+}
