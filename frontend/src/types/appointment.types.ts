@@ -17,6 +17,7 @@ export interface AppointmentRequest {
     status?: AppointmentStatus;
 }
 
+
 export interface Appointment {
     id: string;
     appointmentDate: string;
