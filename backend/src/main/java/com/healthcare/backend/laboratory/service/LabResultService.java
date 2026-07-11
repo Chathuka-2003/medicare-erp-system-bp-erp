@@ -10,4 +10,13 @@ import java.util.UUID;
 
 public interface LabResultService {
 
+    LabOrderResponseDto createLabOrder(LabOrderRequestDto requestDto);
+
+    LabOrderResponseDto getLabOrderById(UUID id);
+
+    List<LabOrderResponseDto> getLabOrdersByPatient(UUID patientId);
+
+    LabResultResponseDto recordResult(LabResultRequestDto requestDto);
+
+    LabResultResponseDto getResultByOrderItem(UUID labOrderItemId);
 }
