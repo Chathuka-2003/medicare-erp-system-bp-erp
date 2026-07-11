@@ -8,14 +8,15 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { Appointment } from "@/types/appointment.types";
 import { formatDateTime } from "@/lib/utils/format";
 import { getAppointmentStatusVariant } from "@/lib/utils/appointment-status";
-import { Eye, XCircle } from "lucide-react";
+import { Eye, XCircle, CheckCircle } from "lucide-react";
 
 interface AppointmentTableProps {
     appointments: Appointment[];
     onCancel: (id: string) => void;
+    onApprove: (id: string) => void;
 }
 
-export function AppointmentTable({ appointments, onCancel }: AppointmentTableProps) {
+export function AppointmentTable({ appointments, onCancel, onApprove }: AppointmentTableProps) {
     const router = useRouter();
 
     if (appointments.length === 0) {
@@ -45,11 +46,22 @@ export function AppointmentTable({ appointments, onCancel }: AppointmentTablePro
                             <StatusBadge label={appt.status} variant={getAppointmentStatusVariant(appt.status)} />
                         </TableCell>
                         <TableCell className="text-right space-x-1">
-                            <Button variant="ghost" size="icon" onClick={() => router.push(`/appointments/${appt.id}`)}>
+                            {appt.status === "SCHEDULED" && (
+                                <Button 
+                                    variant="ghost" 
+                                    size="icon" 
+                                    onClick={() => onApprove(appt.id)}
+                                    title="Approve Appointment"
+                                    className="text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20"
+                                >
+                                    <CheckCircle className="h-4 w-4" />
+                                </Button>
+                            )}
+                            <Button variant="ghost" size="icon" onClick={() => router.push(`/appointments/${appt.id}`)} title="View Details">
                                 <Eye className="h-4 w-4" />
                             </Button>
-                            {appt.status !== "CANCELLED" && appt.status !== "COMPLETED" && (
-                                <Button variant="ghost" size="icon" onClick={() => onCancel(appt.id)}>
+                            {appt.status !== "CANCELLED" && appt.status !== "COMPLETED" && appt.status !== "CONFIRMED" && (
+                                <Button variant="ghost" size="icon" onClick={() => onCancel(appt.id)} title="Cancel Appointment">
                                     <XCircle className="h-4 w-4 text-destructive" />
                                 </Button>
                             )}
