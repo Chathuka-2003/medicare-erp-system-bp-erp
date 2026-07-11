@@ -27,9 +27,11 @@ public class Medicine extends BaseEntity {
 
     private String manufacturer;
 
+
     @Enumerated(EnumType.STRING)
     private MedicineCategory category;
 
+    
     private String dosageForm;
 
     private String strength;
