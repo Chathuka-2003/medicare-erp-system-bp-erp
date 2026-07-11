@@ -5,8 +5,11 @@ import com.healthcare.backend.common.exception.ResourceNotFoundException;
 import com.healthcare.backend.ward.dto.WardRequestDto;
 import com.healthcare.backend.ward.dto.WardResponseDto;
 import com.healthcare.backend.ward.entity.Ward;
+import com.healthcare.backend.ward.entity.Bed;
+import com.healthcare.backend.ward.enums.BedStatus;
 import com.healthcare.backend.ward.mapper.WardMapper;
 import com.healthcare.backend.ward.repository.WardRepository;
+import com.healthcare.backend.ward.repository.BedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class WardServiceImpl implements WardService {
 
     private final WardRepository wardRepository;
+    private final BedRepository bedRepository;
     private final WardMapper wardMapper;
 
     @Override
@@ -39,13 +43,40 @@ public class WardServiceImpl implements WardService {
         ward.setDescription(requestDto.getDescription());
 
         Ward saved = wardRepository.save(ward);
+
+        if (saved.getTotalBeds() != null && saved.getTotalBeds() > 0) {
+            for (int i = 1; i <= saved.getTotalBeds(); i++) {
+                Bed bed = new Bed();
+                bed.setBedNumber("B" + i);
+                bed.setRoomNumber("General");
+                bed.setStatus(BedStatus.AVAILABLE);
+                bed.setWard(saved);
+                bedRepository.save(bed);
+            }
+        }
+
         return wardMapper.toResponseDto(saved);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public WardResponseDto getWardById(UUID id) {
-        return wardMapper.toResponseDto(findWardOrThrow(id));
+        Ward ward = findWardOrThrow(id);
+        List<Bed> existingBeds = bedRepository.findByWardId(id);
+        int target = ward.getTotalBeds() != null ? ward.getTotalBeds() : 0;
+        if (existingBeds.size() < target) {
+            int start = existingBeds.size() + 1;
+            for (int i = start; i <= target; i++) {
+                Bed bed = new Bed();
+                bed.setBedNumber("B" + i);
+                bed.setRoomNumber("General");
+                bed.setStatus(BedStatus.AVAILABLE);
+                bed.setWard(ward);
+                bedRepository.save(bed);
+            }
+            // refresh
+            ward = findWardOrThrow(id);
+        }
+        return wardMapper.toResponseDto(ward);
     }
 
     @Override
@@ -71,6 +102,9 @@ public class WardServiceImpl implements WardService {
                     "Cannot reduce total beds below the number currently occupied/reserved: " + occupiedOrReserved);
         }
 
+        int oldTotal = ward.getTotalBeds() != null ? ward.getTotalBeds() : 0;
+        int newTotal = requestDto.getTotalBeds() != null ? requestDto.getTotalBeds() : 0;
+
         ward.setWardCode(requestDto.getWardCode());
         ward.setWardName(requestDto.getWardName());
         ward.setWardType(requestDto.getWardType());
@@ -80,6 +114,18 @@ public class WardServiceImpl implements WardService {
         ward.setDescription(requestDto.getDescription());
 
         Ward updated = wardRepository.save(ward);
+
+        if (newTotal > oldTotal) {
+            for (int i = oldTotal + 1; i <= newTotal; i++) {
+                Bed bed = new Bed();
+                bed.setBedNumber("B" + i);
+                bed.setRoomNumber("General");
+                bed.setStatus(BedStatus.AVAILABLE);
+                bed.setWard(updated);
+                bedRepository.save(bed);
+            }
+        }
+
         return wardMapper.toResponseDto(updated);
     }
 
