@@ -37,3 +37,18 @@ export function useCreatePatient() {
   });
 }
 
+export function useUpdatePatient() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: PatientRequest }) => patientApi.update(id, data),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: [PATIENTS_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PATIENTS_KEY, variables.id] });
+      toast.success("Patient updated successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? "Failed to update patient");
+    },
+  });
+}
