@@ -8,7 +8,24 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-
+@Getter
+@Setter
 public class MedicineStockRequestDto {
 
+
+    @NotBlank(message = "Batch number is required")
+    private String batchNumber;
+
+    @NotNull(message = "Quantity is required")
+    @Positive(message = "Quantity must be positive")
+    private Integer quantityInStock;
+
+    private Integer reorderLevel;
+
+    private LocalDate manufactureDate;
+
+    @NotNull(message = "Expiry date is required")
+    private LocalDate expiryDate;
+
+    private String storageLocation;
 }

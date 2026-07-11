@@ -12,7 +12,6 @@ import lombok.*;
 @Setter
 public class PatientAddress extends BaseEntity {
 
-
     private String street;
 
 
@@ -23,7 +22,6 @@ public class PatientAddress extends BaseEntity {
 
 
     private String postalCode;
-
 
     @OneToOne
     @JoinColumn(name="patient_id")

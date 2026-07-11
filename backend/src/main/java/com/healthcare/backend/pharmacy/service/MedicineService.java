@@ -11,4 +11,17 @@ import java.util.UUID;
 
 public interface MedicineService {
 
+    MedicineResponseDto createMedicine(MedicineRequestDto requestDto);
+
+    MedicineResponseDto getMedicineById(UUID id);
+
+    Page<MedicineResponseDto> getAllMedicines(int page, int size, String sortBy, String sortDirection);
+
+    MedicineResponseDto updateMedicine(UUID id, MedicineRequestDto requestDto);
+
+    void deleteMedicine(UUID id);
+
+    MedicineStockResponseDto addStock(UUID medicineId, MedicineStockRequestDto requestDto);
+
+    List<MedicineStockResponseDto> getStockByMedicine(UUID medicineId);
 }

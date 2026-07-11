@@ -9,4 +9,7 @@ import java.util.UUID;
 
 public interface ReportRepository extends JpaRepository<SavedReport, UUID> {
 
+    List<SavedReport> findByReportType(ReportType reportType);
+
+    List<SavedReport> findByGeneratedById(UUID staffId);
 }
