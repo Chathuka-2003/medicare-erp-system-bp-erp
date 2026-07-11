@@ -7,4 +7,11 @@ import java.util.UUID;
 
 public interface PrescriptionService {
 
+    PrescriptionResponseDto createPrescription(UUID medicalRecordId, PrescriptionRequestDto requestDto);
+
+    PrescriptionResponseDto getPrescriptionByMedicalRecord(UUID medicalRecordId);
+
+    PrescriptionResponseDto updatePrescription(UUID id, PrescriptionRequestDto requestDto);
+
+    void deletePrescription(UUID id);
 }
