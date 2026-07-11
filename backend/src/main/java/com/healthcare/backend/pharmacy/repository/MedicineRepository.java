@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface MedicineRepository extends JpaRepository<Medicine, UUID>, JpaSpecificationExecutor<Medicine> {
 
+
     Optional<Medicine> findByMedicineCode(String medicineCode);
 
     boolean existsByMedicineCode(String medicineCode);

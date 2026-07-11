@@ -15,9 +15,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class MedicineStock extends BaseEntity {
 
+
     @ManyToOne
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
+
 
     @Column(nullable = false)
     private String batchNumber;

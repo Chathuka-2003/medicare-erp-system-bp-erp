@@ -11,7 +11,9 @@ public interface DrugDispenseRepository extends JpaRepository<DrugDispense, UUID
 
     Optional<DrugDispense> findByDispenseNumber(String dispenseNumber);
 
+
     boolean existsByDispenseNumber(String dispenseNumber);
+
 
     List<DrugDispense> findByPatientId(UUID patientId);
 }

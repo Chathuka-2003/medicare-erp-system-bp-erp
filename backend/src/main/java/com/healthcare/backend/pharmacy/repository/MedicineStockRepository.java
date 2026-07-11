@@ -8,8 +8,10 @@ import java.util.UUID;
 
 public interface MedicineStockRepository extends JpaRepository<MedicineStock, UUID> {
 
+
     List<MedicineStock> findByMedicineId(UUID medicineId);
 
     List<MedicineStock> findByMedicineIdAndQuantityInStockGreaterThanOrderByExpiryDateAsc(
+
             UUID medicineId, Integer quantity);
 }
