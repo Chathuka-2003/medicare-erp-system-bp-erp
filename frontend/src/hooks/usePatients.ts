@@ -52,3 +52,18 @@ export function useUpdatePatient() {
     },
   });
 }
+
+export function useDeletePatient() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => patientApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [PATIENTS_KEY] });
+      toast.success("Patient deleted successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? "Failed to delete patient");
+    },
+  });
+}
