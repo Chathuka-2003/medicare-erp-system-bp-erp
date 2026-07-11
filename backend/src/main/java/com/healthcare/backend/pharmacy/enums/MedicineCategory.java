@@ -1,6 +1,7 @@
 package com.healthcare.backend.pharmacy.enums;
 
 public enum MedicineCategory {
+    
     ANTIBIOTIC,
     ANALGESIC,
     ANTIPYRETIC,
