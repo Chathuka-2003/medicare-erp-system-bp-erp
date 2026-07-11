@@ -4,5 +4,5 @@ import com.healthcare.backend.reports.dto.DashboardDto;
 
 public interface DashboardService {
 
-
+    DashboardDto getDashboardSummary();
 }
