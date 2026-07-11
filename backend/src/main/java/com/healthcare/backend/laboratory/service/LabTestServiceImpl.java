@@ -5,6 +5,7 @@ import com.healthcare.backend.common.exception.ResourceNotFoundException;
 import com.healthcare.backend.laboratory.dto.LabTestRequestDto;
 import com.healthcare.backend.laboratory.dto.LabTestResponseDto;
 import com.healthcare.backend.laboratory.entity.LabTest;
+import com.healthcare.backend.laboratory.enums.LabTestCategory;
 import com.healthcare.backend.laboratory.mapper.LabMapper;
 import com.healthcare.backend.laboratory.repository.LabTestRepository;
 import lombok.RequiredArgsConstructor;
