@@ -8,6 +8,17 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
+@Setter
 public class BedRequestDto {
 
+    @NotNull(message = "Ward is required")
+    private UUID wardId;
+
+    @NotBlank(message = "Bed number is required")
+    private String bedNumber;
+
+    private String roomNumber;
+
+    private BedStatus status;
 }
