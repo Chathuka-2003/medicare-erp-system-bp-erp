@@ -16,3 +16,12 @@ public class AppointmentMapper {
         applyToEntity(appointment, dto, patient, doctor);
         return appointment;
     }
+
+    public void applyToEntity(Appointment appointment, AppointmentRequestDto dto, Patient patient, Doctor doctor) {
+        appointment.setAppointmentDate(dto.getAppointmentDate());
+        appointment.setReason(dto.getReason());
+        appointment.setNotes(dto.getNotes());
+        appointment.setStatus(dto.getStatus() != null ? dto.getStatus() : AppointmentStatus.SCHEDULED);
+        appointment.setPatient(patient);
+        appointment.setDoctor(doctor);
+    }
