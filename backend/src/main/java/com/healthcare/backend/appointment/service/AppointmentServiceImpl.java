@@ -70,6 +70,25 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getAppointmentsByDoctor(UUID doctorId) {
+        return appointmentRepository.findByDoctorId(doctorId).stream()
+                .map(appointmentMapper::toResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public AppointmentResponseDto updateAppointment(UUID id, AppointmentRequestDto requestDto) {
+        Appointment appointment = findAppointmentOrThrow(id);
+        Patient patient = findPatientOrThrow(requestDto.getPatientId());
+        Doctor doctor = findDoctorOrThrow(requestDto.getDoctorId());
+
+        appointmentMapper.applyToEntity(appointment, requestDto, patient, doctor);
+        Appointment updated = appointmentRepository.save(appointment);
+        return appointmentMapper.toResponseDto(updated);
+    }
+
     
 
 
