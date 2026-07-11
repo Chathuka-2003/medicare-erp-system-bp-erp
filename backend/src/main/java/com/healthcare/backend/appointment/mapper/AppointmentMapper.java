@@ -25,3 +25,18 @@ public class AppointmentMapper {
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
     }
+
+    public AppointmentResponseDto toResponseDto(Appointment appointment) {
+        AppointmentResponseDto.AppointmentResponseDtoBuilder builder = AppointmentResponseDto.builder()
+                .id(appointment.getId())
+                .appointmentDate(appointment.getAppointmentDate())
+                .reason(appointment.getReason())
+                .notes(appointment.getNotes())
+                .status(appointment.getStatus())
+                .createdAt(appointment.getCreatedAt())
+                .updatedAt(appointment.getUpdatedAt());
+
+        if (appointment.getPatient() != null) {
+            builder.patientId(appointment.getPatient().getId());
+            builder.patientName(buildPatientName(appointment.getPatient()));
+        }
