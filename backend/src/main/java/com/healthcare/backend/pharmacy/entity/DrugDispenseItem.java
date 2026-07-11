@@ -13,10 +13,12 @@ import lombok.*;
 @AllArgsConstructor
 public class DrugDispenseItem extends BaseEntity {
 
+
     @ManyToOne
     @JoinColumn(name = "drug_dispense_id")
     private DrugDispense drugDispense;
 
+    
     @ManyToOne
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
