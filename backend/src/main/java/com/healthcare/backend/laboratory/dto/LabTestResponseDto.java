@@ -1,5 +1,6 @@
 package com.healthcare.backend.laboratory.dto;
 
+import com.healthcare.backend.laboratory.enums.LabTestCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class LabTestResponseDto {
     private UUID id;
     private String testCode;
     private String testName;
-    private String category;
+    private LabTestCategory category;
     private String description;
     private BigDecimal price;
     private String sampleType;
