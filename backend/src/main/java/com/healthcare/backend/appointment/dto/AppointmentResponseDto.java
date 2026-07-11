@@ -22,3 +22,13 @@ public class AppointmentResponseDto {
     private String reason;
     private String notes;
     private AppointmentStatus status;
+
+    private UUID patientId;
+    private String patientName;
+
+    private UUID doctorId;
+    private String doctorName;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
