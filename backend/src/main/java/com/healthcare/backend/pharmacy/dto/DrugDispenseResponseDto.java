@@ -26,3 +26,26 @@ public class DrugDispenseResponseDto {
     private String patientName;
 
     private UUID prescriptionId;
+
+    private UUID pharmacistId;
+    private String pharmacistName;
+
+    private List<DrugDispenseItemDto> items;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DrugDispenseItemDto {
+        private UUID id;
+        private UUID medicineId;
+        private String medicineName;
+        private Integer quantity;
+        private String dosage;
+        private String instructions;
+    }
+}
