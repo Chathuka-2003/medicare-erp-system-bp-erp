@@ -56,11 +56,11 @@ public class AppointmentMapper {
     }
 
     private String buildDoctorName(Doctor doctor) {
-        // Adjust getter names here once the Doctor entity from the staff module is finalized
-        try {
-            return doctor.toString();
-        } catch (Exception e) {
+        if (doctor == null) {
             return null;
         }
+        String first = doctor.getFirstName() != null ? doctor.getFirstName() : "";
+        String last = doctor.getLastName() != null ? doctor.getLastName() : "";
+        return (first + " " + last).trim();
     }
 }
