@@ -19,3 +19,12 @@ public interface AppointmentService {
     List<AppointmentResponseDto> getAppointmentsByPatient(UUID patientId);
 
     List<AppointmentResponseDto> getAppointmentsByDoctor(UUID doctorId);
+
+    AppointmentResponseDto updateAppointment(UUID id, AppointmentRequestDto requestDto);
+
+    AppointmentResponseDto updateStatus(UUID id, AppointmentStatus status);
+
+    void cancelAppointment(UUID id);
+
+    void deleteAppointment(UUID id);
+}
