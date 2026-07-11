@@ -89,6 +89,20 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMapper.toResponseDto(updated);
     }
 
+    @Override
+    public AppointmentResponseDto updateStatus(UUID id, AppointmentStatus status) {
+        Appointment appointment = findAppointmentOrThrow(id);
+        appointment.setStatus(status);
+        return appointmentMapper.toResponseDto(appointmentRepository.save(appointment));
+    }
+
+    @Override
+    public void cancelAppointment(UUID id) {
+        Appointment appointment = findAppointmentOrThrow(id);
+        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointmentRepository.save(appointment);
+    }
+
     
 
 
