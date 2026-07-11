@@ -11,6 +11,7 @@ import com.healthcare.backend.laboratory.entity.LabOrderItem;
 import com.healthcare.backend.laboratory.entity.LabResult;
 import com.healthcare.backend.laboratory.entity.LabTest;
 import com.healthcare.backend.laboratory.enums.LabTestStatus;
+import com.healthcare.backend.laboratory.enums.LabOrderSubjectType;
 import com.healthcare.backend.laboratory.mapper.LabMapper;
 import com.healthcare.backend.laboratory.repository.LabOrderItemRepository;
 import com.healthcare.backend.laboratory.repository.LabOrderRepository;
@@ -52,10 +53,6 @@ public class LabResultServiceImpl implements LabResultService {
 
     @Override
     public LabOrderResponseDto createLabOrder(LabOrderRequestDto requestDto) {
-        Patient patient = patientRepository.findById(requestDto.getPatientId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Patient not found with id: " + requestDto.getPatientId()));
-
         Doctor doctor = doctorRepository.findById(requestDto.getDoctorId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Doctor not found with id: " + requestDto.getDoctorId()));
@@ -63,9 +60,34 @@ public class LabResultServiceImpl implements LabResultService {
         LabOrder order = new LabOrder();
         order.setOrderNumber(generateOrderNumber());
         order.setOrderDate(LocalDateTime.now());
-        order.setPatient(patient);
         order.setDoctor(doctor);
         order.setStatus(LabTestStatus.ORDERED);
+
+        if (requestDto.getPatientType() == null || requestDto.getPatientType() == LabOrderSubjectType.PATIENT) {
+            order.setPatientType(LabOrderSubjectType.PATIENT);
+            if (requestDto.getPatientId() == null) {
+                throw new BusinessException("Patient ID is required for PATIENT subject type");
+            }
+            Patient patient = patientRepository.findById(requestDto.getPatientId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Patient not found with id: " + requestDto.getPatientId()));
+            order.setPatient(patient);
+        } else if (requestDto.getPatientType() == LabOrderSubjectType.STAFF) {
+            order.setPatientType(LabOrderSubjectType.STAFF);
+            if (requestDto.getStaffId() == null) {
+                throw new BusinessException("Staff ID is required for STAFF subject type");
+            }
+            Staff staff = staffRepository.findById(requestDto.getStaffId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Staff member not found with id: " + requestDto.getStaffId()));
+            order.setStaff(staff);
+        } else if (requestDto.getPatientType() == LabOrderSubjectType.OTHER) {
+            order.setPatientType(LabOrderSubjectType.OTHER);
+            if (requestDto.getOtherName() == null || requestDto.getOtherName().isBlank()) {
+                throw new BusinessException("Other Name is required for OTHER subject type");
+            }
+            order.setOtherName(requestDto.getOtherName());
+        }
 
         List<LabOrderItem> items = new ArrayList<>();
         for (UUID testId : requestDto.getLabTestIds()) {
