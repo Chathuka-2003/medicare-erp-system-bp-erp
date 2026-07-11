@@ -44,4 +44,16 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new BusinessException("This doctor already has an appointment at the selected time");
         }
 
-        
+        Appointment appointment = appointmentMapper.toEntity(requestDto, patient, doctor);
+        Appointment saved = appointmentRepository.save(appointment);
+        return appointmentMapper.toResponseDto(saved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AppointmentResponseDto getAppointmentById(UUID id) {
+        return appointmentMapper.toResponseDto(findAppointmentOrThrow(id));
+    }
+
+    
+
