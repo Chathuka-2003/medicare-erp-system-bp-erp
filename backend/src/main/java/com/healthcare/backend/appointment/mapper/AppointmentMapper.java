@@ -40,3 +40,17 @@ public class AppointmentMapper {
             builder.patientId(appointment.getPatient().getId());
             builder.patientName(buildPatientName(appointment.getPatient()));
         }
+
+        if (appointment.getDoctor() != null) {
+            builder.doctorId(appointment.getDoctor().getId());
+            builder.doctorName(buildDoctorName(appointment.getDoctor()));
+        }
+
+        return builder.build();
+    }
+
+    private String buildPatientName(Patient patient) {
+        String first = patient.getFirstName() != null ? patient.getFirstName() : "";
+        String last = patient.getLastName() != null ? patient.getLastName() : "";
+        return (first + " " + last).trim();
+    }
