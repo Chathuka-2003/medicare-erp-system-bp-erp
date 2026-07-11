@@ -1,5 +1,6 @@
 package com.healthcare.backend.laboratory.dto;
 
+import com.healthcare.backend.laboratory.enums.LabTestCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,7 +19,7 @@ public class LabTestRequestDto {
     @NotBlank(message = "Test name is required")
     private String testName;
 
-    private String category;
+    private LabTestCategory category;
 
     private String description;
 
