@@ -1,5 +1,10 @@
 package com.healthcare.backend.emr.service;
 
+import com.healthcare.backend.emr.dto.DiagnosisRequestDto;
+import com.healthcare.backend.emr.dto.DiagnosisResponseDto;
+import java.util.List;
+import java.util.UUID;
+
 public interface DiagnosisService {
 
     DiagnosisResponseDto addDiagnosis(DiagnosisRequestDto requestDto);
