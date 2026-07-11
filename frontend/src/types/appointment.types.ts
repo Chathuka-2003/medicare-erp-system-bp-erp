@@ -14,6 +14,7 @@ export interface AppointmentRequest {
     appointmentDate: string; // ISO datetime string
     reason?: string;
     notes?: string;
+    
     status?: AppointmentStatus;
 }
 
