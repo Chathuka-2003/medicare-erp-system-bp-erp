@@ -11,6 +11,15 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MedicineResponseDto {
 
-}
+    private UUID id;
+    private String medicineCode;
+    private String medicineName;
+    private String genericName;
+    private String manufacturer;
