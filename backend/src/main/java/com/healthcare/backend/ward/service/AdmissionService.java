@@ -8,4 +8,13 @@ import java.util.UUID;
 
 public interface AdmissionService {
 
+    AdmissionResponseDto admitPatient(AdmissionRequestDto requestDto);
+
+    AdmissionResponseDto getAdmissionById(UUID id);
+
+    List<AdmissionResponseDto> getAdmissionsByPatient(UUID patientId);
+
+    List<AdmissionResponseDto> getCurrentAdmissions();
+
+    AdmissionResponseDto dischargePatient(UUID id);
 }

@@ -8,4 +8,13 @@ import java.util.UUID;
 
 public interface WardService {
 
+    WardResponseDto createWard(WardRequestDto requestDto);
+
+    WardResponseDto getWardById(UUID id);
+
+    List<WardResponseDto> getAllWards();
+
+    WardResponseDto updateWard(UUID id, WardRequestDto requestDto);
+
+    void deleteWard(UUID id);
 }
