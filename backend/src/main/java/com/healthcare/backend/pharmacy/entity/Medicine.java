@@ -31,7 +31,7 @@ public class Medicine extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MedicineCategory category;
 
-    
+
     private String dosageForm;
 
     private String strength;
