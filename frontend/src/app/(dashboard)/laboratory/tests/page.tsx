@@ -21,11 +21,26 @@ export default function LabTestsPage() {
   return (
     <div className="space-y-6 p-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Lab Tests</h1>
+        <h1 className="text-2xl font-semibold">Laboratory Management</h1>
         <Button onClick={() => router.push("/laboratory/tests/new")}>
           <Plus className="mr-2 h-4 w-4" />
           New Test
         </Button>
+      </div>
+
+      <div className="flex border-b border-muted">
+        <button
+          className="px-4 py-2 font-semibold text-sm border-b-2 border-primary text-primary transition-colors"
+          onClick={() => router.push("/laboratory/tests")}
+        >
+          Test Catalog
+        </button>
+        <button
+          className="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors"
+          onClick={() => router.push("/laboratory/orders")}
+        >
+          Lab Orders
+        </button>
       </div>
 
       <Card>
