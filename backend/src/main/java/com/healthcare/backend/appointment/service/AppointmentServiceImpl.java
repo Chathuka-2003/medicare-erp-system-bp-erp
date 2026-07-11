@@ -55,5 +55,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMapper.toResponseDto(findAppointmentOrThrow(id));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<AppointmentResponseDto> getAllAppointments(int page, int size, String sortBy, String sortDirection) {
+        Pageable pageable = buildPageable(page, size, sortBy, sortDirection);
+        return appointmentRepository.findAll(pageable).map(appointmentMapper::toResponseDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getAppointmentsByPatient(UUID patientId) {
+        return appointmentRepository.findByPatientId(patientId).stream()
+                .map(appointmentMapper::toResponseDto)
+                .collect(Collectors.toList());
+    }
+
     
+
+
+
 
