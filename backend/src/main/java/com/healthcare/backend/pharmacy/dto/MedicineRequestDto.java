@@ -22,3 +22,15 @@ public class MedicineRequestDto {
     private String genericName;
 
     private String manufacturer;
+
+    @NotNull(message = "Category is required")
+    private MedicineCategory category;
+
+    private String dosageForm;
+
+    private String strength;
+
+    @NotNull(message = "Unit price is required")
+    @Positive(message = "Unit price must be positive")
+    private BigDecimal unitPrice;
+}
