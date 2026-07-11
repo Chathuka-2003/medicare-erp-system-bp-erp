@@ -18,7 +18,7 @@ public class DrugDispenseItem extends BaseEntity {
     @JoinColumn(name = "drug_dispense_id")
     private DrugDispense drugDispense;
 
-    
+
     @ManyToOne
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
