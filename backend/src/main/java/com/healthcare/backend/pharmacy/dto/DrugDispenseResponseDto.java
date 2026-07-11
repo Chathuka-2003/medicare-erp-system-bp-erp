@@ -41,7 +41,6 @@ public class DrugDispenseResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DrugDispenseItemDto {
-        
         private UUID id;
         private UUID medicineId;
         private String medicineName;
