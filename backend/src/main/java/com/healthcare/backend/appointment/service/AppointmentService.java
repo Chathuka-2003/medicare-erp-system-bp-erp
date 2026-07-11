@@ -10,5 +10,12 @@ import java.util.UUID;
 
 public interface AppointmentService {
 
+    AppointmentResponseDto createAppointment(AppointmentRequestDto requestDto);
 
-}
+    AppointmentResponseDto getAppointmentById(UUID id);
+
+    Page<AppointmentResponseDto> getAllAppointments(int page, int size, String sortBy, String sortDirection);
+
+    List<AppointmentResponseDto> getAppointmentsByPatient(UUID patientId);
+
+    List<AppointmentResponseDto> getAppointmentsByDoctor(UUID doctorId);
