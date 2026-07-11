@@ -23,7 +23,10 @@ public class LabOrderResponseDto {
     private LocalDateTime orderDate;
     private LabTestStatus status;
 
+    private com.healthcare.backend.laboratory.enums.LabOrderSubjectType patientType;
     private UUID patientId;
+    private UUID staffId;
+    private String otherName;
     private String patientName;
 
     private UUID doctorId;
