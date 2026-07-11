@@ -7,6 +7,7 @@ import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { EmptyState } from "@/components/common/EmptyState";
 import { useWards, useDeleteWard } from "@/hooks/useWard";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { WardTabs } from "@/components/ward/WardTabs";
 
 export default function WardsPage() {
   const router = useRouter();
@@ -22,6 +23,8 @@ export default function WardsPage() {
           New Ward
         </Button>
       </div>
+
+      <WardTabs />
 
       {isLoading ? (
         <LoadingSpinner />
