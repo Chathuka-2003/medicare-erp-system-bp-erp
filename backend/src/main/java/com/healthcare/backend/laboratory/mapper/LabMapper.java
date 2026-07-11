@@ -5,6 +5,7 @@ import com.healthcare.backend.laboratory.entity.LabOrder;
 import com.healthcare.backend.laboratory.entity.LabOrderItem;
 import com.healthcare.backend.laboratory.entity.LabResult;
 import com.healthcare.backend.laboratory.entity.LabTest;
+import com.healthcare.backend.laboratory.enums.LabTestCategory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -46,14 +47,26 @@ public class LabMapper {
                 .orderNumber(labOrder.getOrderNumber())
                 .orderDate(labOrder.getOrderDate())
                 .status(labOrder.getStatus())
+                .patientType(labOrder.getPatientType())
                 .orderItems(itemDtos)
                 .createdAt(labOrder.getCreatedAt())
                 .updatedAt(labOrder.getUpdatedAt());
 
-        if (labOrder.getPatient() != null) {
-            builder.patientId(labOrder.getPatient().getId());
-            builder.patientName((labOrder.getPatient().getFirstName() + " " +
-                    (labOrder.getPatient().getLastName() != null ? labOrder.getPatient().getLastName() : "")).trim());
+        if (labOrder.getPatientType() == null || labOrder.getPatientType() == com.healthcare.backend.laboratory.enums.LabOrderSubjectType.PATIENT) {
+            if (labOrder.getPatient() != null) {
+                builder.patientId(labOrder.getPatient().getId());
+                builder.patientName((labOrder.getPatient().getFirstName() + " " +
+                        (labOrder.getPatient().getLastName() != null ? labOrder.getPatient().getLastName() : "")).trim());
+            }
+        } else if (labOrder.getPatientType() == com.healthcare.backend.laboratory.enums.LabOrderSubjectType.STAFF) {
+            if (labOrder.getStaff() != null) {
+                builder.staffId(labOrder.getStaff().getId());
+                builder.patientName((labOrder.getStaff().getFirstName() + " " +
+                        (labOrder.getStaff().getLastName() != null ? labOrder.getStaff().getLastName() : "")).trim());
+            }
+        } else if (labOrder.getPatientType() == com.healthcare.backend.laboratory.enums.LabOrderSubjectType.OTHER) {
+            builder.otherName(labOrder.getOtherName());
+            builder.patientName(labOrder.getOtherName() != null ? labOrder.getOtherName() : "Walk-in / Guest");
         }
 
         if (labOrder.getDoctor() != null) {
