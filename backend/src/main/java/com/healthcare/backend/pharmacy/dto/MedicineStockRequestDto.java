@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 public class MedicineStockRequestDto {
 
+    
     @NotBlank(message = "Batch number is required")
     private String batchNumber;
 
