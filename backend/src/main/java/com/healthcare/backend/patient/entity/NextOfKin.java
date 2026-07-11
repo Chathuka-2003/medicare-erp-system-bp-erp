@@ -15,16 +15,12 @@ public class NextOfKin extends BaseEntity {
 
     private String name;
 
-
     private String relationship;
-
 
     private String phone;
 
-
     private String address;
-
-
+    
     @OneToOne
     @JoinColumn(name="patient_id")
     private Patient patient;
