@@ -23,3 +23,12 @@ public class MedicineResponseDto {
     private String medicineName;
     private String genericName;
     private String manufacturer;
+    private MedicineCategory category;
+    private String dosageForm;
+    private String strength;
+    private BigDecimal unitPrice;
+    private Integer totalStock;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
