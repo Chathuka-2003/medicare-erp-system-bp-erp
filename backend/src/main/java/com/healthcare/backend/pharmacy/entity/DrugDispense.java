@@ -26,7 +26,7 @@ public class DrugDispense extends BaseEntity {
 
     private String remarks;
 
-    
+
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
