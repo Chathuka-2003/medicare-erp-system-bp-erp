@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { useCurrentAdmissions, useDischargePatient } from "@/hooks/useWard";
 import { formatDateTime } from "@/lib/utils/format";
 import { Plus } from "lucide-react";
+import { WardTabs } from "@/components/ward/WardTabs";
 
 export default function AdmissionsPage() {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function AdmissionsPage() {
           New Admission
         </Button>
       </div>
+
+      <WardTabs />
 
       <Card>
         <CardContent className="pt-6">
