@@ -8,4 +8,9 @@ import java.util.UUID;
 
 public interface DrugDispenseService {
 
+    DrugDispenseResponseDto createDispense(DrugDispenseRequestDto requestDto);
+
+    DrugDispenseResponseDto getDispenseById(UUID id);
+
+    List<DrugDispenseResponseDto> getDispensesByPatient(UUID patientId);
 }
