@@ -103,7 +103,21 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.save(appointment);
     }
 
-    
+    @Override
+    public void deleteAppointment(UUID id) {
+        Appointment appointment = findAppointmentOrThrow(id);
+        appointmentRepository.delete(appointment);
+    }
+
+    private Appointment findAppointmentOrThrow(UUID id) {
+        return appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
+    }
+
+    private Patient findPatientOrThrow(UUID id) {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
+    }
 
 
 
