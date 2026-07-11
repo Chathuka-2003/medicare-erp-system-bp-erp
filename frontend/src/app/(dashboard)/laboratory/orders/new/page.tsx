@@ -14,22 +14,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCreateLabOrder, useLabTests } from "@/hooks/useLaboratory";
 import { patientApi } from "@/lib/api/patient.api";
-import { doctorApi } from "@/lib/api/staff.api";
+import { doctorApi, staffApi } from "@/lib/api/staff.api";
 import { useDebounce } from "@/hooks/useDebounce";
 import { formatCurrency } from "@/lib/utils/format";
+import { LabOrderSubjectType } from "@/types/laboratory.types";
 
 export default function NewLabOrderPage() {
   const router = useRouter();
   const createMutation = useCreateLabOrder();
 
-  const [patientQuery, setPatientQuery] = useState("");
-  const debouncedPatientQuery = useDebounce(patientQuery, 400);
-
-  const { data: patientResults } = useQuery({
-    queryKey: ["patient-search-lookup", debouncedPatientQuery],
-    queryFn: () => patientApi.search({ firstName: debouncedPatientQuery, size: 10 }),
-    enabled: debouncedPatientQuery.length > 1,
+  const { data: patientsResponse } = useQuery({
+    queryKey: ["patients-list-all"],
+    queryFn: () => patientApi.getAll({ page: 0, size: 100 }),
   });
+  const patients = patientsResponse?.content ?? [];
+
+  const { data: staffResponse } = useQuery({
+    queryKey: ["staff-list-all"],
+    queryFn: () => staffApi.getAll({ page: 0, size: 100 }),
+  });
+  const staffMembers = staffResponse?.content ?? [];
 
   const { data: doctors } = useQuery({
     queryKey: ["doctors-lookup"],
@@ -41,13 +45,17 @@ export default function NewLabOrderPage() {
   const form = useForm<any>({
     resolver: zodResolver(labOrderSchema),
     defaultValues: {
+      patientType: LabOrderSubjectType.PATIENT,
       patientId: "",
+      staffId: "",
+      otherName: "",
       doctorId: "",
       labTestIds: [],
     },
   });
 
   const selectedTestIds: string[] = form.watch("labTestIds") ?? [];
+  const patientType = form.watch("patientType") || LabOrderSubjectType.PATIENT;
 
   function toggleTest(testId: string, checked: boolean) {
     const current: string[] = form.getValues("labTestIds") ?? [];
@@ -71,27 +79,72 @@ export default function NewLabOrderPage() {
           <Card>
             <CardHeader><CardTitle>Order Details</CardTitle></CardHeader>
             <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <FormField control={form.control} name="patientId" render={({ field }) => (
+              <FormField control={form.control} name="patientType" render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Patient</FormLabel>
-                  <Input
-                    placeholder="Type to search patient by first name..."
-                    value={patientQuery}
-                    onChange={(e) => setPatientQuery(e.target.value)}
-                  />
+                  <FormLabel>Subject Type</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
+                      <SelectTrigger><SelectValue placeholder="Select subject type" /></SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {patientResults?.content.map((p) => (
-                        <SelectItem key={p.id} value={p.id}>{p.firstName} {p.lastName} ({p.patientNumber})</SelectItem>
-                      ))}
+                      <SelectItem value={LabOrderSubjectType.PATIENT}>Patient</SelectItem>
+                      <SelectItem value={LabOrderSubjectType.STAFF}>Staff Member</SelectItem>
+                      <SelectItem value={LabOrderSubjectType.OTHER}>Other (Guest / Walk-in)</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )} />
+
+              {patientType === LabOrderSubjectType.PATIENT && (
+                <FormField control={form.control} name="patientId" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Patient</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {patients.map((p) => (
+                          <SelectItem key={p.id} value={p.id}>{p.firstName} {p.lastName} ({p.patientNumber})</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+              )}
+
+              {patientType === LabOrderSubjectType.STAFF && (
+                <FormField control={form.control} name="staffId" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Staff Member</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger><SelectValue placeholder="Select staff member" /></SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {staffMembers.map((s) => (
+                          <SelectItem key={s.id} value={s.id}>{s.firstName} {s.lastName} ({s.employeeNumber})</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+              )}
+
+              {patientType === LabOrderSubjectType.OTHER && (
+                <FormField control={form.control} name="otherName" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Other Name (Guest / Walk-in)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter patient name..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+              )}
 
               <FormField control={form.control} name="doctorId" render={({ field }) => (
                 <FormItem>
