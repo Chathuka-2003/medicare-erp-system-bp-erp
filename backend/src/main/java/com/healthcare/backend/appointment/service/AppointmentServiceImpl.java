@@ -24,3 +24,24 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class AppointmentServiceImpl implements AppointmentService {
+
+    private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final AppointmentMapper appointmentMapper;
+
+    @Override
+    public AppointmentResponseDto createAppointment(AppointmentRequestDto requestDto) {
+        Patient patient = findPatientOrThrow(requestDto.getPatientId());
+        Doctor doctor = findDoctorOrThrow(requestDto.getDoctorId());
+
+        if (appointmentRepository.existsByDoctorIdAndAppointmentDate(
+                requestDto.getDoctorId(), requestDto.getAppointmentDate())) {
+            throw new BusinessException("This doctor already has an appointment at the selected time");
+        }
+
+        
