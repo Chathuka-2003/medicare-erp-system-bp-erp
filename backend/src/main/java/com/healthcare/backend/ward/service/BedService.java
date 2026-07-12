@@ -9,4 +9,15 @@ import java.util.UUID;
 
 public interface BedService {
 
+    BedResponseDto createBed(BedRequestDto requestDto);
+
+    BedResponseDto getBedById(UUID id);
+
+    List<BedResponseDto> getBedsByWard(UUID wardId);
+
+    List<BedResponseDto> getAvailableBeds(UUID wardId);
+
+    BedResponseDto updateBedStatus(UUID id, BedStatus status);
+
+    void deleteBed(UUID id);
 }

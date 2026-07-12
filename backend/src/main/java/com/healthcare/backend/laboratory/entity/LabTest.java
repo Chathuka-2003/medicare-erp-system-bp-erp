@@ -2,6 +2,8 @@ package com.healthcare.backend.laboratory.entity;
 
 import com.healthcare.backend.common.base.BaseEntity;
 
+import com.healthcare.backend.laboratory.enums.LabTestCategory;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +24,8 @@ public class LabTest extends BaseEntity {
     @Column(nullable = false)
     private String testName;
 
-    private String category;
+    @Convert(converter = com.healthcare.backend.laboratory.converter.LabTestCategoryConverter.class)
+    private LabTestCategory category;
 
     @Column(length = 1000)
     private String description;

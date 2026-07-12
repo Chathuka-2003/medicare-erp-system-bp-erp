@@ -13,7 +13,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-
+@RestController
+@RequestMapping("/api/v1/drug-dispenses")
+@RequiredArgsConstructor
 public class DrugDispenseController {
 
+    private final DrugDispenseService drugDispenseService;
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<DrugDispenseResponseDto>> createDispense(
+            @Valid @RequestBody DrugDispenseRequestDto requestDto) {
+        DrugDispenseResponseDto created = drugDispenseService.createDispense(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Drugs dispensed successfully", created));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<DrugDispenseResponseDto>> getDispenseById(@PathVariable UUID id) {
+        DrugDispenseResponseDto dispense = drugDispenseService.getDispenseById(id);
+        return ResponseEntity.ok(ApiResponse.success("Dispense record retrieved successfully", dispense));
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<ApiResponse<List<DrugDispenseResponseDto>>> getDispensesByPatient(
+            @PathVariable UUID patientId) {
+        List<DrugDispenseResponseDto> dispenses = drugDispenseService.getDispensesByPatient(patientId);
+        return ResponseEntity.ok(ApiResponse.success("Dispense records retrieved successfully", dispenses));
+    }
 }

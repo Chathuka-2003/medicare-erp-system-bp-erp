@@ -9,4 +9,13 @@ import java.util.UUID;
 
 public interface ReportService {
 
+    ReportResponseDto saveReport(ReportRequestDto requestDto);
+
+    ReportResponseDto getReportById(UUID id);
+
+    List<ReportResponseDto> getReportsByType(ReportType reportType);
+
+    List<ReportResponseDto> getAllReports();
+
+    void deleteReport(UUID id);
 }

@@ -8,4 +8,13 @@ import java.util.UUID;
 
 public interface SupplierService {
 
+    SupplierResponseDto createSupplier(SupplierRequestDto requestDto);
+
+    SupplierResponseDto getSupplierById(UUID id);
+
+    List<SupplierResponseDto> getAllSuppliers();
+
+    SupplierResponseDto updateSupplier(UUID id, SupplierRequestDto requestDto);
+
+    void deleteSupplier(UUID id);
 }

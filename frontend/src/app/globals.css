@@ -252,3 +252,12 @@
     display: none;
   }
 }
+
+/* Hide Next.js Dev tools overlay icon for production level experience */
+nextjs-portal, 
+[id^="nextjs-hot-reloader-indicator"],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

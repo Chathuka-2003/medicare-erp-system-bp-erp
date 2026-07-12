@@ -3,7 +3,9 @@ package com.healthcare.backend.laboratory.entity;
 import com.healthcare.backend.common.base.BaseEntity;
 import com.healthcare.backend.laboratory.enums.LabTestStatus;
 import com.healthcare.backend.patient.entity.Patient;
+import com.healthcare.backend.staff.entity.Staff;
 import com.healthcare.backend.staff.entity.Doctor;
+import com.healthcare.backend.laboratory.enums.LabOrderSubjectType;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,9 +26,20 @@ public class LabOrder extends BaseEntity {
 
     private LocalDateTime orderDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "patient_type")
+    private LabOrderSubjectType patientType = LabOrderSubjectType.PATIENT;
+
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
+
+    @Column(name = "other_name")
+    private String otherName;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
