@@ -2,7 +2,7 @@ spring:
   application:
     name: backend
   datasource:
-    password: YOUR_AZURE_MYSQL_PASSWORD
+    password: Chathuka@2003
     username: erpadmin
     url: jdbc:mysql://healthcare-erp-mysql.mysql.database.azure.com:3306/healthcare_erp?useSSL=true&requireSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
