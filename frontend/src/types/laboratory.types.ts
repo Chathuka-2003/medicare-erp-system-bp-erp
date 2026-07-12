@@ -7,10 +7,22 @@ export enum LabTestStatus {
   CANCELLED = "CANCELLED",
 }
 
+export enum LabTestCategory {
+  HEMATOLOGY = "HEMATOLOGY",
+  BIOCHEMISTRY = "BIOCHEMISTRY",
+  MICROBIOLOGY = "MICROBIOLOGY",
+  SEROLOGY = "SEROLOGY",
+  IMMUNOLOGY = "IMMUNOLOGY",
+  URINALYSIS = "URINALYSIS",
+  PATHOLOGY = "PATHOLOGY",
+  MOLECULAR = "MOLECULAR",
+  OTHERS = "OTHERS",
+}
+
 export interface LabTestRequest {
   testCode: string;
   testName: string;
-  category?: string;
+  category?: LabTestCategory;
   description?: string;
   price: number;
   sampleType?: string;
@@ -21,7 +33,7 @@ export interface LabTest {
   id: string;
   testCode: string;
   testName: string;
-  category?: string;
+  category?: LabTestCategory;
   description?: string;
   price: number;
   sampleType?: string;
@@ -30,8 +42,17 @@ export interface LabTest {
   updatedAt?: string;
 }
 
+export enum LabOrderSubjectType {
+  PATIENT = "PATIENT",
+  STAFF = "STAFF",
+  OTHER = "OTHER",
+}
+
 export interface LabOrderRequest {
-  patientId: string;
+  patientType?: LabOrderSubjectType;
+  patientId?: string;
+  staffId?: string;
+  otherName?: string;
   doctorId: string;
   labTestIds: string[];
 }
@@ -48,7 +69,10 @@ export interface LabOrder {
   orderNumber: string;
   orderDate: string;
   status: LabTestStatus;
-  patientId: string;
+  patientType?: LabOrderSubjectType;
+  patientId?: string;
+  staffId?: string;
+  otherName?: string;
   patientName: string;
   doctorId: string;
   doctorName: string;
