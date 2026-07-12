@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +12,7 @@ import { useSuppliers, usePurchaseOrdersBySupplier } from "@/hooks/useInventory"
 import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { Plus } from "lucide-react";
 
-export default function PurchaseOrdersPage() {
+function PurchaseOrdersContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [supplierId, setSupplierId] = useState(searchParams.get("supplierId") ?? "");
@@ -69,5 +69,13 @@ export default function PurchaseOrdersPage() {
         <p className="py-8 text-center text-muted-foreground">Select a supplier above to view their purchase orders.</p>
       )}
     </div>
+  );
+}
+
+export default function PurchaseOrdersPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <PurchaseOrdersContent />
+    </Suspense>
   );
 }
