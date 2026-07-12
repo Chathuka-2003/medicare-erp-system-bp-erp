@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { labTestSchema, LabTestFormValues } from "@/schemas/laboratory.schema";
-import { LabTest } from "@/types/laboratory.types";
+import { LabTest, LabTestCategory } from "@/types/laboratory.types";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCreateLabTest, useUpdateLabTest } from "@/hooks/useLaboratory";
 
@@ -58,7 +59,20 @@ export function LabTestForm({ labTest }: LabTestFormProps) {
               <FormItem><FormLabel>Test Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="category" render={({ field }) => (
-              <FormItem><FormLabel>Category</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.values(LabTestCategory).map((cat) => (
+                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
             )} />
             <FormField control={form.control} name="price" render={({ field }) => (
               <FormItem><FormLabel>Price</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
