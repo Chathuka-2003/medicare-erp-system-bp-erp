@@ -1,13 +1,11 @@
 spring:
   application:
     name: backend
-
   datasource:
-    password: Chathuka@9911
-    username: root
-    url: jdbc:mysql://localhost:3306/healthcare_erp
+    password: YOUR_AZURE_MYSQL_PASSWORD
+    username: erpadmin
+    url: jdbc:mysql://healthcare-erp-mysql.mysql.database.azure.com:3306/healthcare_erp?useSSL=true&requireSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,7 +13,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 jwt:
   secret: ${JWT_SECRET:this-is-a-placeholder-secret-key-change-it-please-min-32-chars}
   expiration: 86400000
