@@ -1,484 +1,435 @@
-# 🏥 Healthcare ERP System
+# Healthcare ERP System
 
-## Full-Stack Hospital Management Platform
+A comprehensive, full-stack Hospital Enterprise Resource Planning (ERP) system built to digitize and streamline the complete patient care lifecycle — from registration and appointments through billing, pharmacy, laboratory, ward management, and inventory control.
 
-A comprehensive **Healthcare Enterprise Resource Planning (ERP) System** designed to digitize and streamline hospital operations through a secure, scalable, and modular architecture. The platform integrates patient management, medical records, appointments, billing, pharmacy, laboratory, inventory, ward management, and reporting into a unified healthcare ecosystem.
-
-Built with **Spring Boot, Next.js 14, PostgreSQL, and modern enterprise development practices**, this system provides role-based access, automated workflows, real-time operational visibility, and efficient healthcare data management.
-
----
-
-# 🚀 Key Features
-
-## 🔐 Secure Authentication & Authorization
-
-* JWT-based authentication system
-
-* Role-Based Access Control (RBAC)
-
-* Supports 12+ user roles:
-
-  * Administrator
-  * Doctor
-  * Nurse
-  * Receptionist
-  * Pharmacist
-  * Laboratory Staff
-  * Accountant
-  * Inventory Manager
-  * HR Staff
-  * Patient
-  * Management
-  * Other healthcare roles
-
-* Secure password handling
-
-* Protected API endpoints
-
-* Permission-based module access
+![Java](https://img.shields.io/badge/Java-25-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
+![License](https://img.shields.io/badge/license-Academic-lightgrey)
 
 ---
 
-# 🏗️ System Architecture
+## Table of Contents
 
-The application follows a **Full-Stack Monolithic Enterprise Architecture** with clear domain separation.
-
-```
-Healthcare ERP System
-
-Frontend
-    |
-    | REST API Communication
-    |
-Backend
-    |
-    |
-PostgreSQL Database
-```
-
-### Backend Architecture
-
-Built using layered enterprise architecture:
-
-```
-Controller Layer
-        |
-Service Layer
-        |
-Repository Layer
-        |
-Database Layer
-```
-
-Key backend principles:
-
-* Modular domain-driven structure
-* Separation of concerns
-* Reusable common components
-* Centralized exception handling
-* DTO-based data transfer
-* Entity relationship management
-* Database migration management
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Modules](#modules)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Configuration](#environment-configuration)
+- [Running the Application](#running-the-application)
+- [API Overview](#api-overview)
+- [Authentication & Roles](#authentication--roles)
+- [Deployment](#deployment)
+- [CI/CD Pipeline](#cicd-pipeline)
+- [Database Schema](#database-schema)
+- [Contributing](#contributing)
+- [Team & Contributions](#team--contributions)
+- [License](#license)
 
 ---
 
-# 🛠️ Technology Stack
+## Overview
 
-## Backend
+The **Healthcare ERP System** is a monolithic, module-based hospital management platform designed to replace fragmented, paper-based, or siloed hospital administration processes with a single, unified digital system. It covers ten interconnected functional domains — Patient Management, Appointments, Staff, Electronic Medical Records (EMR), Billing, Pharmacy, Laboratory, Ward Management, Inventory, and Reporting — all built on a shared, secured, role-based backend and a modern, responsive frontend.
 
-| Technology      | Purpose                   |
-| --------------- | ------------------------- |
-| Java            | Core programming language |
-| Spring Boot     | Backend framework         |
-| Spring Security | Application security      |
-| JWT             | Authentication            |
-| Spring Data JPA | Database interaction      |
-| Hibernate ORM   | Object relational mapping |
-| PostgreSQL      | Primary database          |
-| Flyway          | Database migration        |
-| Swagger/OpenAPI | API documentation         |
-| Maven           | Dependency management     |
+The system was built with a real-world hospital workflow in mind: a patient is registered, scheduled for an appointment with a doctor, examined and diagnosed (EMR), prescribed medication (Pharmacy), sent for lab tests (Laboratory), billed for services (Billing), and — where necessary — admitted to a ward (Ward Management), all while hospital inventory and staffing are tracked in the background (Inventory, Staff).
 
 ---
 
-## Frontend
+## Key Features
 
-| Technology     | Purpose                 |
-| -------------- | ----------------------- |
-| Next.js 14     | React framework         |
-| TypeScript     | Type-safe development   |
-| Tailwind CSS   | UI styling              |
-| TanStack Query | Server state management |
-| Zod            | Schema validation       |
-| NextAuth       | Authentication handling |
-| Shadcn UI      | Reusable UI components  |
-
----
-
-# 📦 Core Modules
-
-## 1. Patient Management
-
-Features:
-
-* Patient registration
-* Patient profile management
-* Contact information
-* Insurance details
-* Emergency contacts
-* Patient search and filtering
-
-## 2. Appointment Management
-
-Features:
-
-* Doctor scheduling
-* Appointment booking
-* Calendar management
-* Time slot management
-* Appointment status tracking
-
-## 3. Staff Management
-
-Features:
-
-* Doctor management
-* Employee records
-* Department management
-* Medical specialization tracking
-
-## 4. Electronic Medical Records (EMR)
-
-Features:
-
-* Patient medical history
-* Diagnosis management
-* Prescription management
-* Vital records
-* Allergy tracking
-
-## 5. Billing & Payments
-
-Features:
-
-* Invoice generation
-* Payment processing
-* Insurance claim management
-* Payment reconciliation
-
-## 6. Pharmacy Management
-
-Features:
-
-* Medicine inventory
-* Stock monitoring
-* Drug dispensing
-* FEFO (First Expire First Out) stock handling
-* Medicine tracking
-
-## 7. Laboratory Management
-
-Features:
-
-* Lab test management
-* Lab orders
-* Result recording
-* Medical report handling
-
-## 8. Ward & Admission Management
-
-Features:
-
-* Ward management
-* Bed allocation
-* Admission tracking
-* Real-time bed availability
-
-## 9. Inventory Management
-
-Features:
-
-* Medical supply tracking
-* Supplier management
-* Purchase orders
-* Stock movement history
-
-## 10. Reporting & Analytics
-
-Features:
-
-* Hospital statistics dashboard
-* Operational reports
-* Financial reports
-* Custom report generation
+- **Ten fully integrated hospital modules** sharing a single patient and staff identity across the system
+- **Role-based access control** for 12 distinct hospital staff roles (Super Admin, Hospital Admin, Doctor, Nurse, Pharmacist, Lab Technician, Receptionist, Cashier, Inventory Manager, HR Manager, Accountant, Patient)
+- **JWT-based stateless authentication** with Spring Security
+- **Automated business logic**, including:
+  - Real-time bed availability synchronization across admissions and discharges
+  - FEFO (First-Expiry-First-Out) pharmacy stock deduction on drug dispensing
+  - Automatic invoice balance tracking on payment recording
+  - Automatic purchase order stock updates on goods receipt
+- **RESTful API** with consistent, predictable response contracts (`ApiResponse<T>`, `PageResponse<T>`)
+- **Type-safe frontend** built with Next.js 14, TypeScript, React Hook Form, and Zod validation
+- **Server-state management** via TanStack Query for automatic caching, refetching, and invalidation
+- **Responsive, accessible UI** built on shadcn/ui and Tailwind CSS
+- **Database schema versioning** for reliable, repeatable deployments
+- **CI/CD pipeline** via GitHub Actions, deploying to Azure App Service on every push
 
 ---
 
-# 🔥 Technical Highlights
+## System Architecture
 
-## Backend
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        Client (Browser)                      │
+└───────────────────────────┬───────────────────────────────────┘
+                             │ HTTPS
+┌───────────────────────────▼───────────────────────────────────┐
+│                Frontend — Next.js 14 (App Router)             │
+│   NextAuth (JWT Session) · TanStack Query · React Hook Form   │
+│              shadcn/ui · Tailwind CSS · Zod                   │
+└───────────────────────────┬───────────────────────────────────┘
+                             │ REST (Bearer JWT)
+┌───────────────────────────▼───────────────────────────────────┐
+│               Backend — Spring Boot 4 (Java 25)                │
+│  Spring Security + JWT · Spring Data JPA · Bean Validation     │
+│         10 Modular Domains · Layered Architecture              │
+│    (Controller → Service → Repository → Entity)                │
+└───────────────────────────┬───────────────────────────────────┘
+                             │ JDBC
+┌───────────────────────────▼───────────────────────────────────┐
+│                    MySQL 8.0 Database                          │
+│              (Azure Database for MySQL — Flexible Server)      │
+└─────────────────────────────────────────────────────────────┘
+```
 
-✅ RESTful API architecture
-✅ JWT authentication
-✅ Role-based security model
-✅ Global exception handling
-✅ DTO mapping layer
-✅ Database optimization
-✅ Flyway version-controlled migrations
-✅ Entity relationship management
-✅ API documentation with Swagger
-
-## Frontend
-
-✅ Responsive enterprise dashboard
-✅ Server-side rendering with Next.js
-✅ Component-driven architecture
-✅ Reusable UI components
-✅ Client-side caching using TanStack Query
-✅ Form validation using Zod
-✅ Protected routes with middleware
+Both the frontend and backend are deployed independently as **Azure App Service** instances, with the database hosted on **Azure Database for MySQL (Flexible Server)**. Deployments are automated via **GitHub Actions**, triggered on every push to the main development branch.
 
 ---
 
-# 🗄️ Database Design
+## Tech Stack
 
-Database:
+### Backend
+| Technology | Purpose |
+|---|---|
+| Java 25 | Core language |
+| Spring Boot 4.1.0 | Application framework |
+| Spring Data JPA / Hibernate | ORM and persistence |
+| Spring Security | Authentication & authorization |
+| JJWT (io.jsonwebtoken) | JWT generation and validation |
+| MySQL Connector/J | Database driver |
+| Lombok | Boilerplate reduction |
+| Maven | Build and dependency management |
 
-```
-PostgreSQL
-```
+### Frontend
+| Technology | Purpose |
+|---|---|
+| Next.js 14 (App Router) | React framework, SSR/routing |
+| TypeScript | Type safety |
+| NextAuth.js | Authentication/session management |
+| TanStack Query (React Query) | Server-state management |
+| React Hook Form + Zod | Form state and schema validation |
+| shadcn/ui + Tailwind CSS | Component library and styling |
+| Axios | HTTP client |
+| Recharts | Data visualization |
+| Zustand | Lightweight client state |
 
-Migration management:
-
-```
-Flyway
-```
-
-Database modules:
-
-```
-V1  Patient Tables
-V2  Appointment Tables
-V3  Staff Tables
-V4  EMR Tables
-V5  Billing Tables
-V6  Pharmacy Tables
-V7  Laboratory Tables
-V8  Ward Tables
-V9  Inventory Tables
-V10 Reporting Tables
-```
-
----
-
-# 🔄 Automated Business Workflows
-
-The system includes automated healthcare workflows:
-
-### Bed Availability Tracking
-
-* Updates bed status automatically
-* Prevents duplicate allocation
-* Provides real-time availability
-
-### Pharmacy Stock Management
-
-* FEFO inventory deduction
-* Stock validation
-* Medicine availability tracking
-
-### Billing Workflow
-
-* Automatic invoice calculation
-* Payment tracking
-* Outstanding balance reconciliation
+### Infrastructure
+| Technology | Purpose |
+|---|---|
+| Azure App Service | Hosting (frontend & backend) |
+| Azure Database for MySQL | Managed relational database |
+| GitHub Actions | CI/CD pipeline |
 
 ---
 
-# 📁 Project Structure
+## Modules
 
-## Backend
-
-```
-backend/
- ├── config/
- ├── security/
- ├── common/
- ├── patient/
- ├── appointment/
- ├── staff/
- ├── emr/
- ├── billing/
- ├── pharmacy/
- ├── laboratory/
- ├── ward/
- ├── inventory/
- └── reports/
-```
-
-## Frontend
-
-```
-frontend/
- ├── app/
- ├── components/
- ├── hooks/
- ├── store/
- ├── lib/
- ├── types/
- ├── schemas/
- └── middleware.ts
-```
+| # | Module | Description |
+|---|--------|-------------|
+| 1 | **Patient Management** | Patient registration, demographic and contact records, insurance details, next-of-kin, search |
+| 2 | **Appointments** | Doctor-patient appointment scheduling, status tracking (Scheduled, Confirmed, Completed, Cancelled, etc.) |
+| 3 | **Staff Management** | Doctor and staff records, departments, specializations, role assignment |
+| 4 | **EMR (Electronic Medical Records)** | Medical visit records, vitals, diagnoses, prescriptions, allergies |
+| 5 | **Billing** | Invoicing, itemized billing, payment recording with automatic balance tracking, insurance claims |
+| 6 | **Pharmacy** | Medicine catalog, batch-tracked stock, drug dispensing with automatic FEFO deduction |
+| 7 | **Laboratory** | Lab test catalog, test ordering, result recording and verification |
+| 8 | **Ward Management** | Ward and bed inventory, patient admission/discharge with real-time bed availability sync |
+| 9 | **Inventory** | Hospital supply items, suppliers, purchase orders with automated stock receipt |
+| 10 | **Reports & Dashboard** | Cross-module operational dashboard, saved report generation |
 
 ---
 
-# ⚙️ Installation & Setup
+## Project Structure
 
-## Backend Setup
+```
+healthcare-erp-system/
+├── backend/
+│   └── src/main/java/com/healthcare/backend/
+│       ├── common/              # Shared base classes, DTOs, exceptions, enums
+│       ├── security/            # JWT, Spring Security config, Auth controller
+│       ├── patient/             # Patient module
+│       ├── appointment/         # Appointment module
+│       ├── staff/               # Staff/Doctor module
+│       ├── emr/                 # Electronic Medical Records module
+│       ├── billing/             # Billing/Invoicing module
+│       ├── pharmacy/            # Pharmacy module
+│       ├── laboratory/          # Laboratory module
+│       ├── ward/                # Ward Management module
+│       ├── inventory/           # Inventory module
+│       └── reports/             # Reports & Dashboard module
+│
+└── frontend/
+    └── src/
+        ├── app/                 # Next.js App Router pages
+        │   ├── (auth)/          # Login, register, forgot-password
+        │   └── (dashboard)/     # All protected module pages
+        ├── components/          # Reusable UI components, per module
+        ├── hooks/               # TanStack Query hooks, per module
+        ├── lib/
+        │   ├── api/             # Axios API service layer, per module
+        │   ├── auth/            # NextAuth config, session helpers
+        │   ├── constants/       # Routes, roles
+        │   └── utils/           # Formatting, status-color helpers
+        ├── schemas/             # Zod validation schemas, per module
+        ├── types/               # TypeScript types, per module
+        └── middleware.ts        # Route protection
+```
 
-Clone repository:
+Each backend module follows a consistent layered structure: `controller/ → service/ → repository/ → entity/ → dto/ → mapper/ → enums/`.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Java 25** (JDK)
+- **Node.js 20+** and npm
+- **MySQL 8.0** (local instance, or Azure Database for MySQL)
+- **Maven** (or use the included wrapper `mvnw`)
+- Git
+
+### Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/<your-username>/healthcare-erp-system.git
+cd healthcare-erp-system
 ```
 
-Navigate:
+---
 
-```bash
-cd backend
-```
+## Environment Configuration
 
-Configure database:
-
-`application.yaml`
-
-Example:
+### Backend — `backend/src/main/resources/application.yaml`
 
 ```yaml
 spring:
+  application:
+    name: backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/healthcare_erp
-    username: postgres
-    password=password
+    url: jdbc:mysql://localhost:3306/healthcare_erp
+    username: root
+    password: your_local_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret: ${JWT_SECRET:a-32-character-minimum-secret-key}
+  expiration: 86400000
 ```
 
-Run migrations:
+> For production/cloud deployment, override `spring.datasource.*` and `jwt.secret` via environment variables rather than committing real credentials.
 
-```bash
-mvn clean install
+### Frontend — `frontend/.env.local`
+
 ```
-
-Start backend:
-
-```bash
-mvn spring-boot:run
+NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=a-32-character-minimum-random-secret
 ```
 
 ---
 
-## Frontend Setup
+## Running the Application
 
-Navigate:
+### 1. Create the database
+
+```sql
+CREATE DATABASE healthcare_erp;
+```
+
+### 2. Run the backend
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+The backend starts on **`http://localhost:8080`**. On first run, a `DataSeeder` automatically creates a default administrator account:
+
+```
+Email:    admin@healthcare.local
+Password: Admin@123
+```
+
+> Change this password immediately after first login in a real deployment.
+
+### 3. Run the frontend
 
 ```bash
 cd frontend
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Create environment file:
-
-```
-.env.local
-```
-
-Run application:
-
-```bash
 npm run dev
 ```
 
-Application:
+The frontend starts on **`http://localhost:3000`**.
 
+### 4. Log in
+
+Navigate to `http://localhost:3000/login` and sign in with the seeded admin credentials above.
+
+---
+
+## API Overview
+
+All endpoints are prefixed with `/api/v1`. Responses follow a consistent envelope:
+
+```json
+{
+  "success": true,
+  "message": "Patient retrieved successfully",
+  "data": { "...": "..." },
+  "timestamp": "2026-07-12T10:00:00"
+}
 ```
-http://localhost:3000
+
+Paginated endpoints return:
+
+```json
+{
+  "content": [ "..." ],
+  "pageNumber": 0,
+  "pageSize": 10,
+  "totalElements": 42,
+  "totalPages": 5,
+  "first": true,
+  "last": false
+}
+```
+
+### Sample Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/auth/login` | Authenticate and receive a JWT |
+| `GET` | `/api/v1/patients` | Paginated list of patients |
+| `POST` | `/api/v1/patients` | Create a new patient |
+| `GET` | `/api/v1/appointments` | Paginated list of appointments |
+| `POST` | `/api/v1/medical-records` | Create a medical record |
+| `POST` | `/api/v1/invoices` | Create an invoice |
+| `POST` | `/api/v1/payments` | Record a payment against an invoice |
+| `POST` | `/api/v1/drug-dispenses` | Dispense medication (auto-deducts stock) |
+| `PATCH` | `/api/v1/admissions/{id}/discharge` | Discharge a patient (auto-frees bed) |
+| `PATCH` | `/api/v1/purchase-orders/{id}/receive` | Receive a purchase order (auto-updates stock) |
+| `GET` | `/api/v1/dashboard` | Aggregated cross-module statistics |
+
+---
+
+## Authentication & Roles
+
+Authentication is handled via **JWT (JSON Web Tokens)**. On login, the backend issues a signed token containing the staff member's ID, email, and role, which the frontend attaches as a `Bearer` token on every subsequent request via an Axios interceptor.
+
+### Supported Roles
+
+`SUPER_ADMIN` · `HOSPITAL_ADMIN` · `DOCTOR` · `NURSE` · `PHARMACIST` · `LAB_TECHNICIAN` · `RECEPTIONIST` · `CASHIER` · `INVENTORY_MANAGER` · `HR_MANAGER` · `ACCOUNTANT` · `PATIENT`
+
+Staff accounts are created by an administrator via the Staff module — there is no public self-registration, consistent with real-world hospital access control policy.
+
+---
+
+## Deployment
+
+The system is designed for deployment on **Microsoft Azure**:
+
+| Component | Azure Service |
+|---|---|
+| Backend | Azure App Service (Java SE runtime) |
+| Frontend | Azure App Service (Node.js runtime) |
+| Database | Azure Database for MySQL – Flexible Server |
+
+### Frontend build requirement
+
+`next.config.ts` must include the standalone output mode for App Service compatibility:
+
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: "standalone",
+};
+
+export default nextConfig;
+```
+
+### Required Azure App Service environment variables
+
+**Backend:**
+```
+SPRING_DATASOURCE_URL=jdbc:mysql://<server>.mysql.database.azure.com:3306/healthcare_erp?useSSL=true&requireSSL=false
+SPRING_DATASOURCE_USERNAME=<admin-username>
+SPRING_DATASOURCE_PASSWORD=<admin-password>
+JWT_SECRET=<production-secret>
+```
+
+**Frontend:**
+```
+NEXT_PUBLIC_API_URL=https://<backend-app-name>.azurewebsites.net/api/v1
+NEXTAUTH_URL=https://<frontend-app-name>.azurewebsites.net
+NEXTAUTH_SECRET=<production-secret>
 ```
 
 ---
 
-# 🔌 API Documentation
+## CI/CD Pipeline
 
-Swagger documentation available at:
+Deployment is automated using **GitHub Actions**. Two workflows independently build and deploy the backend and frontend whenever changes are pushed to their respective directories:
 
-```
-http://localhost:8080/swagger-ui/index.html
-```
+- `.github/workflows/backend-deploy.yml` — builds the Spring Boot JAR with Maven and deploys to Azure App Service
+- `.github/workflows/frontend-deploy.yml` — builds the Next.js application and deploys to Azure App Service
 
----
-
-# 🧪 Testing
-
-Backend testing:
-
-```
-JUnit 5
-Mockito
-Spring Boot Test
-```
-
-Implemented tests:
-
-* Patient Service Tests
-* Appointment Service Tests
-* Staff Service Tests
-* EMR Service Tests
-* Billing Service Tests
-* Pharmacy Service Tests
-* Laboratory Service Tests
-* Ward Service Tests
-* Inventory Service Tests
-* Reporting Service Tests
+Both use Azure App Service **publish profiles**, stored securely as GitHub repository secrets (`AZURE_BACKEND_PUBLISH_PROFILE`, `AZURE_FRONTEND_PUBLISH_PROFILE`).
 
 ---
 
-# 🔒 Security Features
+## Database Schema
 
-* JWT token authentication
-* Role-based authorization
-* Secure API endpoints
-* Input validation
-* Exception handling
-* Protected frontend routes
+The system defines 10 relational domains sharing common keys (`Patient`, `Doctor`, `Staff`) across module boundaries. All primary keys use **UUID** identifiers. Key cross-module relationships:
 
----
-
-# 📈 Future Improvements
-
-* Microservices migration
-* Cloud deployment using Azure/AWS
-* AI-assisted diagnosis recommendations
-* Mobile application support
-* Real-time notifications
-* Telemedicine integration
-* Advanced analytics dashboard
+- `Appointment` → `Patient`, `Doctor`
+- `MedicalRecord` → `Patient`, `Doctor`; owns `Vitals`, `Diagnosis`, `Prescription`
+- `Invoice` → `Patient`, `Appointment`; owns `InvoiceItem`, `Payment`
+- `DrugDispense` → `Patient`, `Prescription`, `Staff` (pharmacist); owns `DrugDispenseItem`
+- `LabOrder` → `Patient`, `Doctor`; owns `LabOrderItem` → `LabResult`
+- `Admission` → `Patient`, `Doctor`, `Bed` → `Ward`
+- `PurchaseOrder` → `Supplier`; owns `PurchaseOrderItem` → `Item`
 
 ---
 
-# 👨‍💻 Development Practices
+## Contributing
 
-* Clean Architecture principles
-* Git-based version control
-* Feature-based module organization
-* REST API standards
-* Secure coding practices
-* Scalable enterprise design
+1. Create a feature branch from the base development branch
+2. Follow the existing layered architecture (`controller → service → repository → entity`) when adding backend functionality
+3. Follow the existing module structure (`types → schema → api → hooks → components → pages`) when adding frontend functionality
+4. Ensure `mvn clean package` (backend) and `npx tsc --noEmit` (frontend) pass before opening a pull request
+5. Open a pull request against the appropriate base branch for review
 
 ---
 
+## Team & Contributions
 
+| Module | Responsibility |
+|--------|-----------------|
+| Architecture, Security & Integration | Authentication, role-based access control, deployment pipeline, cross-module integration |
+| Patient Management | Patient records, search, and demographics |
+| Appointments | Scheduling and appointment lifecycle |
+| Staff Management | Doctors, staff, departments, specializations |
+| EMR | Medical records, vitals, diagnoses, prescriptions |
+| Billing | Invoicing, payments, insurance claims |
+| Pharmacy | Medicine catalog, stock, dispensing |
+| Laboratory | Lab tests, orders, results |
+| Ward Management | Wards, beds, admissions |
+| Inventory | Items, suppliers, purchase orders |
+| Reports & Dashboard | Cross-module analytics and reporting |
 
+---
 
+## License
+
+This project was developed for academic purposes as part of a university coursework submission. All rights reserved by the contributing team members.
