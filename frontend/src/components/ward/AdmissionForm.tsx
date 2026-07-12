@@ -20,15 +20,13 @@ export function AdmissionForm() {
   const router = useRouter();
   const admitMutation = useAdmitPatient();
 
-  const [patientQuery, setPatientQuery] = useState("");
   const [selectedWardId, setSelectedWardId] = useState("");
-  const debouncedPatientQuery = useDebounce(patientQuery, 400);
 
-  const { data: patientResults } = useQuery({
-    queryKey: ["patient-search-lookup", debouncedPatientQuery],
-    queryFn: () => patientApi.search({ firstName: debouncedPatientQuery, size: 10 }),
-    enabled: debouncedPatientQuery.length > 1,
+  const { data: patientsResponse } = useQuery({
+    queryKey: ["patients-list-all"],
+    queryFn: () => patientApi.getAll({ page: 0, size: 100 }),
   });
+  const patients = patientsResponse?.content ?? [];
 
   const { data: doctors } = useQuery({
     queryKey: ["doctors-lookup"],
@@ -63,17 +61,12 @@ export function AdmissionForm() {
             <FormField control={form.control} name="patientId" render={({ field }) => (
               <FormItem>
                 <FormLabel>Patient</FormLabel>
-                <Input
-                  placeholder="Type to search patient by first name..."
-                  value={patientQuery}
-                  onChange={(e) => setPatientQuery(e.target.value)}
-                />
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {patientResults?.content.map((p) => (
+                    {patients.map((p) => (
                       <SelectItem key={p.id} value={p.id}>{p.firstName} {p.lastName} ({p.patientNumber})</SelectItem>
                     ))}
                   </SelectContent>
