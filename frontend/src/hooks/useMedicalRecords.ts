@@ -2,8 +2,9 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { medicalRecordApi, prescriptionApi } from "@/lib/api/emr.api";
-import { MedicalRecordRequest, PrescriptionRequest } from "@/types/emr.types";
+import { medicalRecordApi, prescriptionApi, allergyApi } from "@/lib/api/emr.api";
+import { AllergyRequest, MedicalRecordRequest, PrescriptionRequest } from "@/types/emr.types";
+
 
 const RECORDS_KEY = "medical-records";
 const PRESCRIPTIONS_KEY = "prescriptions";
@@ -93,5 +94,39 @@ export function useUpdatePrescription() {
       toast.success("Prescription updated successfully");
     },
     onError: (error: any) => toast.error(error?.response?.data?.message ?? "Failed to update prescription"),
+  });
+}
+
+const ALLERGIES_KEY = "allergies";
+
+export function useAllergiesByPatient(patientId: string | undefined) {
+  return useQuery({
+    queryKey: [ALLERGIES_KEY, "patient", patientId],
+    queryFn: () => allergyApi.getByPatient(patientId as string),
+    enabled: !!patientId,
+  });
+}
+
+export function useAddAllergy(patientId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: AllergyRequest) => allergyApi.add(patientId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [ALLERGIES_KEY, "patient", patientId] });
+      toast.success("Allergy added successfully");
+    },
+    onError: (error: any) => toast.error(error?.response?.data?.message ?? "Failed to add allergy"),
+  });
+}
+
+export function useDeleteAllergy(patientId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (allergyId: string) => allergyApi.delete(allergyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [ALLERGIES_KEY, "patient", patientId] });
+      toast.success("Allergy removed");
+    },
+    onError: (error: any) => toast.error(error?.response?.data?.message ?? "Failed to delete allergy"),
   });
 }
