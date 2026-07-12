@@ -14,7 +14,8 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
+        configuration.setAllowedOriginPatterns(List.of(
+            "http://localhost:*",
             "https://healthcare-erp-frontend-h9akaecagpfvgwc7.southeastasia-01.azurewebsites.net"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
