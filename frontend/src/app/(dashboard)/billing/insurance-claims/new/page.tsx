@@ -1,5 +1,5 @@
 "use client";
-
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,12 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCreateInsuranceClaim } from "@/hooks/useBilling";
 
-export default function NewInsuranceClaimPage() {
+function NewInsuranceClaimContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const patientId = searchParams.get("patientId") ?? "";
   const createMutation = useCreateInsuranceClaim();
-
   const form = useForm<any>({
     resolver: zodResolver(insuranceClaimSchema),
     defaultValues: {
@@ -29,12 +28,10 @@ export default function NewInsuranceClaimPage() {
       status: "SUBMITTED",
     },
   });
-
   async function onSubmit(values: InsuranceClaimFormValues) {
     await createMutation.mutateAsync(values);
     router.push(`/billing/insurance-claims`);
   }
-
   return (
     <div className="space-y-6 p-6">
       <h1 className="text-2xl font-semibold">New Insurance Claim</h1>
@@ -57,7 +54,6 @@ export default function NewInsuranceClaimPage() {
               )} />
             </CardContent>
           </Card>
-
           <div className="flex justify-end gap-3">
             <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
             <Button type="submit" disabled={createMutation.isPending}>
@@ -67,5 +63,13 @@ export default function NewInsuranceClaimPage() {
         </form>
       </Form>
     </div>
+  );
+}
+
+export default function NewInsuranceClaimPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <NewInsuranceClaimContent />
+    </Suspense>
   );
 }
