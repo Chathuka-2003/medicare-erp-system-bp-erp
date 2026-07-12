@@ -9,11 +9,31 @@ export enum RecordType {
 }
 
 export interface VitalsDto {
+  id?: string;
   temperature?: number;
   heartRate?: number;
   bloodPressure?: number;
   weight?: number;
   height?: number;
+  respiratoryRate?: number;
+  oxygenSaturation?: number;
+}
+
+export type AllergySeverity = "MILD" | "MODERATE" | "SEVERE";
+
+export interface AllergyRequest {
+  allergyName: string;
+  description?: string;
+  severity?: AllergySeverity;
+}
+
+export interface Allergy {
+  id: string;
+  allergyName: string;
+  description?: string;
+  severity?: AllergySeverity;
+  patientId: string;
+  createdAt: string;
 }
 
 export interface DiagnosisDto {
