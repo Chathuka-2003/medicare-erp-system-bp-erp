@@ -9,6 +9,7 @@ import { Invoice } from "@/types/billing.types";
 import { formatCurrency } from "@/lib/utils/format";
 import { getInvoiceStatusVariant } from "@/lib/utils/invoice-status";
 import { Eye } from "lucide-react";
+//import { formatCurrency } from "@/lib/utils/format";
 
 interface InvoiceTableProps {
   invoices: Invoice[];
