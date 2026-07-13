@@ -11,6 +11,7 @@ import { useInvoicesByPatient, usePaymentsByInvoice } from "@/hooks/useBilling";
 import { patientApi } from "@/lib/api/patient.api";
 import { useDebounce } from "@/hooks/useDebounce";
 import { formatCurrency, formatDateTime } from "@/lib/utils/format";
+//import { patientApi } from "@/lib/api/patient.api";
 
 export default function PaymentsPage() {
   const [patientQuery, setPatientQuery] = useState("");
