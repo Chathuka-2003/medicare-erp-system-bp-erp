@@ -15,6 +15,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
+//import { useState } from "react";
 
 export default function InsuranceClaimsPage() {
   const router = useRouter();
