@@ -1,3 +1,4 @@
+//Types of Billing
 export enum InvoiceStatus {
   DRAFT = "DRAFT",
   ISSUED = "ISSUED",
