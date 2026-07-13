@@ -4,6 +4,7 @@ import {
   Invoice, InvoiceRequest, Payment, PaymentRequest,
   InsuranceClaim, InsuranceClaimRequest,
 } from "@/types/billing.types";
+//import { apiClient } from "./client";
 
 const INVOICE_BASE_PATH = "/invoices";
 const PAYMENT_BASE_PATH = "/payments";
