@@ -9,7 +9,7 @@ import { InvoiceTable } from "@/components/billing/InvoiceTable";
 import { useInvoices } from "@/hooks/useBilling";
 import { usePagination } from "@/hooks/usePagination";
 import { Plus } from "lucide-react";
-
+//import { useInvoices } from "@/hooks/useBilling";
 export default function InvoicesPage() {
   const router = useRouter();
   const { page, size, setPage } = usePagination(0, 10);
