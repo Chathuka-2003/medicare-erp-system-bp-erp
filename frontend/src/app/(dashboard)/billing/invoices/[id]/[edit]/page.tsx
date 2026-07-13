@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useInvoice } from "@/hooks/useBilling";
 import { InvoiceForm } from "@/components/billing/InvoiceForm";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+// const params = useParams();
 
 export default function EditInvoicePage() {
   const params = useParams();
