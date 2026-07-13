@@ -1,5 +1,6 @@
 import { Invoice } from "@/types/billing.types";
 import { formatCurrency, formatDate } from "@/lib/utils/format";
+//import { Invoice } from "@/types/billing.types";
 
 interface InvoicePrintViewProps {
   invoice: Invoice;
